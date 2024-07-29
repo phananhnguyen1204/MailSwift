@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import RecentEmailCard from "./RecentEmailCard";
-// import { useAuth } from "@clerk/clerk-react";
-// import { useEffect } from "react";
+import { Document } from "../document";
 
 const RecentEmail: React.FC = () => {
-  const [documents, setDocuments] = useState([
-    { title: "Untitled Doc 1", description: "This is description1" },
-    { title: "Untitled Doc 2", description: "This is description2" },
-  ]);
+  const [documents, setDocuments] = useState<Document[]>([]);
 
-  //matching with the userId
-  //and then map it out
-
-  // const { userId } = useAuth();
-  // const userDocuments = useEffect(() => {});
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/documents")
+      .then((response) => setDocuments(response.data))
+      .catch((error) => {
+        console.error("There was an error fetching the documents!", error);
+      });
+  }, []);
 
   return (
     <div className="flex flex-col items-start p-4 ml-3">
@@ -21,8 +21,14 @@ const RecentEmail: React.FC = () => {
         Recent Documents
       </h3>
       <div className="flex space-x-4">
-        <RecentEmailCard title="Untitled Document" />
-        <RecentEmailCard title="Untitled Document" />
+        {documents.map((doc, index) => (
+          <RecentEmailCard
+            key={index}
+            id={doc.id}
+            title={doc.title}
+            description={doc.description}
+          />
+        ))}
       </div>
     </div>
   );

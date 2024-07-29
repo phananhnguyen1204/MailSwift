@@ -15,8 +15,8 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "/singleDoc",
-        element: <SingleDocument />, //hard code this for now, will use form id later to display the document
+        path: "/documents/:id",
+        element: <SingleDocument />,
       },
     ],
   },

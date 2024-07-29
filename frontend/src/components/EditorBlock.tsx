@@ -9,29 +9,21 @@ import { useToast } from "../ui/use-toast";
 import Editor from "./Editor";
 import { cn } from "../lib/utils";
 import DrawerAI from "./DrawerAI";
+import { Document } from "../document";
 
 const FormSchema = z.object({
   title: z.string().min(2).max(50),
   description: z.string().min(2),
 });
 
-interface DocumentProps {
-  userId: string;
-  title: string | null;
-  description: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 interface EditorBlockProps {
-  document?: DocumentProps | null;
+  document?: Document | null;
 }
 
 const EditorBlock: React.FC<EditorBlockProps> = ({ document }) => {
   const { toast } = useToast();
   if (!document) {
     console.error("No document provided, redirecting...");
-    // Use a programmatic way to navigate or redirect here
   }
 
   const EditorForm = useForm<z.infer<typeof FormSchema>>({
