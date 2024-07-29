@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/phananhnguyen/Desktop/Coding/MailMaster/backend/API/API.csproj": {}
+    "/Users/khanhhanguyen/MailMaster/backend/API/API.csproj": {}
   },
   "projects": {
-    "/Users/phananhnguyen/Desktop/Coding/MailMaster/backend/API/API.csproj": {
+    "/Users/khanhhanguyen/MailMaster/backend/API/API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/phananhnguyen/Desktop/Coding/MailMaster/backend/API/API.csproj",
+        "projectUniqueName": "/Users/khanhhanguyen/MailMaster/backend/API/API.csproj",
         "projectName": "API",
-        "projectPath": "/Users/phananhnguyen/Desktop/Coding/MailMaster/backend/API/API.csproj",
-        "packagesPath": "/Users/phananhnguyen/.nuget/packages/",
-        "outputPath": "/Users/phananhnguyen/Desktop/Coding/MailMaster/backend/API/obj/",
+        "projectPath": "/Users/khanhhanguyen/MailMaster/backend/API/API.csproj",
+        "packagesPath": "/Users/khanhhanguyen/.nuget/packages/",
+        "outputPath": "/Users/khanhhanguyen/MailMaster/backend/API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/phananhnguyen/.nuget/NuGet/NuGet.Config"
+          "/Users/khanhhanguyen/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,12 +32,27 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
@@ -62,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
