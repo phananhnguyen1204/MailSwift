@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import RecentEmailCard from "./RecentEmailCard";
 import { Document } from "../document";
+import agent from "../../app/api/agent";
 
 const RecentEmail: React.FC = () => {
   const [documents, setDocuments] = useState<Document[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/documents")
-      .then((response) => setDocuments(response.data))
-      .catch((error) => {
-        console.error("There was an error fetching the documents!", error);
-      });
+    const fetchDocuments = async () => {
+      try {
+        const documents = await agent.DocumentContainer.get();
+        setDocuments(documents);
+      } catch (error) {
+        console.error("Error fetching documents:", error);
+        setError("Failed to load documents. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDocuments();
   }, []);
+
+  if (loading) return <p>Loading documents...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="flex flex-col items-start p-4 ml-3">

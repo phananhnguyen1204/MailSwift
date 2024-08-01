@@ -10,5 +10,6 @@ namespace API.Data
         }
 
         public DbSet<Document> Documents { get; set; }
+        public DbSet<DocumentContainer> DocumentContainer { get; set; }
     }
 }

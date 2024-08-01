@@ -17,7 +17,7 @@ const DrawerAI = () => {
   return (
     <div>
       <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerTrigger className="flex float-right p-1 mr-2 bg-white border border-gray-300 hover:text-blue-500 text-black shadow-sm hover:bg-gray-100 w-[20vh] items-center justify-center">
+        <DrawerTrigger className="flex float-right p-2 mr-2 bg-white border border-gray-300 hover:text-blue-500 text-black text-sm shadow-sm hover:bg-gray-100 w-[20vh] items-center justify-center">
           Mail Master AI 🎩
         </DrawerTrigger>
         <DrawerContent className="bg-blue-300 text-black">

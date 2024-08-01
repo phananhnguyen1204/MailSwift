@@ -18,6 +18,7 @@ builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<UserMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
@@ -29,8 +30,12 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(opt => {
-    opt.AllowCredentials().AllowAnyMethod().WithOrigins("http://localhost:5173");
+    opt.WithOrigins("http://localhost:5173")
+       .AllowAnyMethod()
+       .AllowAnyHeader()
+       .AllowCredentials(); // Allows credentials (cookies, etc.)
 });
+
 
 app.UseAuthorization();
 
