@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20240728210823_InitialCreate")]
+    [Migration("20240801020654_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -32,18 +32,53 @@ namespace API.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("DocumentContainerId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DocumentContainerId");
+
                     b.ToTable("Documents");
+                });
+
+            modelBuilder.Entity("API.Entities.DocumentContainer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DocumentContainer");
+                });
+
+            modelBuilder.Entity("API.Entities.Document", b =>
+                {
+                    b.HasOne("API.Entities.DocumentContainer", "DocumentContainer")
+                        .WithMany("UserDocuments")
+                        .HasForeignKey("DocumentContainerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentContainer");
+                });
+
+            modelBuilder.Entity("API.Entities.DocumentContainer", b =>
+                {
+                    b.Navigation("UserDocuments");
                 });
 #pragma warning restore 612, 618
         }

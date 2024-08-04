@@ -10,6 +10,8 @@ import Editor from "./Editor";
 import { cn } from "../lib/utils";
 import DrawerAI from "./DrawerAI";
 import { Document } from "../document";
+import agent from "../../app/api/agent";
+import { Link, useNavigate } from "react-router-dom";
 
 const FormSchema = z.object({
   title: z.string().min(2).max(50),
@@ -21,7 +23,9 @@ interface EditorBlockProps {
 }
 
 const EditorBlock: React.FC<EditorBlockProps> = ({ document }) => {
+  const navigate = useNavigate();
   const { toast } = useToast();
+
   if (!document) {
     console.error("No document provided, redirecting...");
   }
@@ -34,26 +38,65 @@ const EditorBlock: React.FC<EditorBlockProps> = ({ document }) => {
     },
   });
 
+  //UPDATE DOCUMENT
   async function onUpdateChange(values: z.infer<typeof FormSchema>) {
-    console.log("Form values:", values);
-    toast({
-      className: cn(
-        "top-0 left-0 flex fixed md:max-w-[400px] md:top-4 md:right-4 bg-blue-500 text-white rounded-xl"
-      ),
-      title: "🚀 Document is Updated",
-      description:
-        "You just made changes to your document, and no worries, it was saved 🎉!",
-    });
+    if (!document) {
+      console.error("No document provided for update.");
+      return;
+    }
+
+    try {
+      await agent.DocumentContainer.updateDoc(document.id, values);
+      toast({
+        className: cn(
+          "top-0 left-0 flex fixed md:max-w-[400px] md:top-4 md:right-4 bg-blue-500 text-white rounded-xl"
+        ),
+        title: "🚀 Document is Updated",
+        description:
+          "You just made changes to your document, and no worries, it was saved 🎉!",
+      });
+    } catch (error) {
+      console.error("Error updating document:", error);
+      toast({
+        className: cn(
+          "top-0 left-0 flex fixed md:max-w-[400px] md:top-4 md:right-4 bg-red-500 text-white rounded-xl"
+        ),
+        title: "Error",
+        description:
+          "There was a problem updating your document. Please try again.",
+      });
+    }
   }
 
-  function onDocumentDelete() {
-    toast({
-      className: cn(
-        "top-0 left-0 flex fixed md:max-w-[400px] md:top-4 md:right-4 bg-blue-500 text-white rounded-xl"
-      ),
-      title: "🚀 Document is Deleted",
-      description: "You just deleted a document!",
-    });
+  //DELETE DOCUMENT
+  async function onDocumentDelete() {
+    if (!document) {
+      console.error("No document provided for deletion.");
+      return;
+    }
+
+    try {
+      await agent.DocumentContainer.removeDoc(document.id);
+      toast({
+        className: cn(
+          "top-0 left-0 flex fixed md:max-w-[400px] md:top-4 md:right-4 bg-blue-500 text-white rounded-xl"
+        ),
+        title: "🚀 Document is Deleted",
+        description: "You just deleted a document!",
+      });
+
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error deleting document:", error);
+      toast({
+        className: cn(
+          "top-0 left-0 flex fixed md:max-w-[400px] md:top-4 md:right-4 bg-red-500 text-white rounded-xl"
+        ),
+        title: "Error",
+        description:
+          "There was a problem deleting your document. Please try again.",
+      });
+    }
   }
 
   return (
@@ -62,7 +105,7 @@ const EditorBlock: React.FC<EditorBlockProps> = ({ document }) => {
         <DrawerAI />
         <form onSubmit={EditorForm.handleSubmit(onDocumentDelete)}>
           <Button
-            className="rounded-xl bg-red-600 text-white hover:bg-red-500"
+            className="rounded-xl bg-red-600 text-white hover:bg-red-500 text-sm"
             type="submit"
             variant="destructive"
           >
@@ -101,13 +144,19 @@ const EditorBlock: React.FC<EditorBlockProps> = ({ document }) => {
               )}
             />
           </div>
-          <div className="flex justify-center mt-4 mb-4 p-4">
+          <div className="flex justify-center mt-4 mb-4 p-4 gap-4">
             <Button
               className="px-4 py-2 rounded-xl bg-blue-500 text-white hover:bg-blue-600 shadow-md"
               type="submit"
             >
               Save Changes
             </Button>
+            <Link
+              to={"/dashboard"}
+              className="px-4 py-2.5 rounded-xl bg-blue-500 text-white hover:bg-blue-600 shadow-md hover:text-white text-sm "
+            >
+              Back to Dashboard
+            </Link>
           </div>
         </form>
       </FormProvider>
