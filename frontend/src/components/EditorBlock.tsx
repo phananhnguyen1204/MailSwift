@@ -1,4 +1,3 @@
-"use client";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,6 +36,9 @@ const EditorBlock: React.FC<EditorBlockProps> = ({ document }) => {
       description: document?.description || "",
     },
   });
+
+  // Extract the description from the form data
+  const description = EditorForm.watch("description", "");
 
   //UPDATE DOCUMENT
   async function onUpdateChange(values: z.infer<typeof FormSchema>) {
@@ -102,10 +104,11 @@ const EditorBlock: React.FC<EditorBlockProps> = ({ document }) => {
   return (
     <div className="container mx-auto p-2">
       <div className="flex justify-end mb-3">
-        <DrawerAI />
+        {/* Pass the description to the DrawerAI component */}
+        <DrawerAI description={description} />
         <form onSubmit={EditorForm.handleSubmit(onDocumentDelete)}>
           <Button
-            className="rounded-xl bg-red-600 text-white hover:bg-red-500 text-sm"
+            className="rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-sm"
             type="submit"
             variant="destructive"
           >
@@ -153,7 +156,7 @@ const EditorBlock: React.FC<EditorBlockProps> = ({ document }) => {
             </Button>
             <Link
               to={"/dashboard"}
-              className="px-4 py-2.5 rounded-xl bg-blue-500 text-white hover:bg-blue-600 shadow-md hover:text-white text-sm "
+              className="px-4 py-2.5 rounded-xl bg-white text-black hover:text-blue-600 shadow-md text-sm "
             >
               Back to Dashboard
             </Link>
