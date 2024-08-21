@@ -7,14 +7,22 @@ axios.defaults.baseURL = "http://localhost:5000/api/";
 const responseBody = (response: AxiosResponse) => response.data;
 
 axios.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Handle successful responses
+    if (response.status === 204) {
+      return Promise.resolve(response); // Resolving the promise without triggering any toast
+    }
+    return response; // Continue with the normal flow for other successful responses
+  },
   (error: AxiosError) => {
+    // Handle network or server errors
     if (!error.response) {
       console.error("Network or server error:", error);
       toast.error("Network error. Please check your connection or server.");
       return Promise.reject(error);
     }
 
+    // Handle specific HTTP error status codes
     const { data, status } = error.response as AxiosResponse;
     switch (status) {
       case 400:
@@ -39,7 +47,7 @@ axios.interceptors.response.use(
         toast.error("An unexpected error occurred");
         break;
     }
-    return Promise.reject(error.response);
+    return Promise.reject(error.response); // Reject the promise for errors
   }
 );
 
@@ -76,10 +84,18 @@ const TestErrors = {
   getValidationError: () => requests.get("buggy/validation-error"),
 };
 
+const OpenAI = {
+  generateEmail: (description: string) =>
+    axios
+      .post("OpenAI/generate-email", { description })
+      .then((response) => response.data),
+};
+
 const agent = {
   Document,
   TestErrors,
   DocumentContainer,
+  OpenAI,
 };
 
 export default agent;
