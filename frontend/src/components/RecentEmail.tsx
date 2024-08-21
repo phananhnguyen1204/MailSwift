@@ -29,9 +29,7 @@ const RecentEmail: React.FC = () => {
 
   return (
     <div className="flex flex-col items-start p-4 ml-3">
-      <h3 className="text-lg font-semibold mb-4 text-blue-300">
-        Recent Documents
-      </h3>
+      <h3 className="text-xl font-bold mb-4 text-blue-300">Recent Documents</h3>
       <div className="flex space-x-4">
         {documents.map((doc, index) => (
           <RecentEmailCard
