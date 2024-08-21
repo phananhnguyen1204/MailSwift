@@ -16,7 +16,7 @@ namespace API.Controllers
         public OpenAIController()
         {
             string endpoint = "https://mailmaster.openai.azure.com/";
-            string apiKey = "9c47bc7e64d14fe7b115dc4dc603f120";
+            string apiKey = "";
             _deploymentId = "MailMaster";
 
             _openAIClient = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
