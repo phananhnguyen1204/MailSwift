@@ -15,7 +15,7 @@ namespace API.Controllers
 
         public OpenAIController()
         {
-             string endpoint = "endpoint";
+            string endpoint = "endpoint";
             string apiKey = "key";
             _deploymentId = "MailMaster";
 
