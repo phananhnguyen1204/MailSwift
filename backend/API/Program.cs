@@ -27,8 +27,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseCors(opt => {
     opt.WithOrigins("http://localhost:5173")
        .AllowAnyMethod()

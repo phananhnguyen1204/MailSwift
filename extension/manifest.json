@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Mail Master",
+  "version": "1.0",
+  "description": "An extension to assist with email responses in Gmail.",
+  "permissions": ["activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "32": "logo.png"
+  },
+  "action": {
+    "default_popup": "templates/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

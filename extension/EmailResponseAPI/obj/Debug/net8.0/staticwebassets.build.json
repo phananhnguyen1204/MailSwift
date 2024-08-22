@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "uk16FzwQRrF3OJ6o4MNFXNM6JUMiitsOh3l1dgMWnQE=",
+  "Source": "EmailResponseAPI",
+  "BasePath": "_content/EmailResponseAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
