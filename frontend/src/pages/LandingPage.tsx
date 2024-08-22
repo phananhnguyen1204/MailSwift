@@ -26,8 +26,8 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen p-4 w-full py-12 items-center">
-      <div className="grid gap-6 grid-cols-1 justify-center items-center text-center md:grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_550px]">
-        <div className="flex flex-col justify-center gap-2 max-w-1/2">
+      <div className="grid grid-cols-1 gap-x-10 justify-center items-center text-center md:grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_550px]">
+        <div className="flex flex-col justify-center gap-2 max-w-1/2 mr-10">
           <div className="gap-2">
             <h1 className="text-xl font-semibold leading-tight sm:text-4xl xl:text-5xl text-blue-300">
               Unlock the Power of <br />
