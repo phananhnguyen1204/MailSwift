@@ -55,7 +55,7 @@ const DrawerAI: React.FC<DrawerAIProps> = ({ description }) => {
           className="flex float-right p-2 mr-2 bg-white border border-gray-300 hover:text-blue-500 text-black text-sm shadow-sm hover:bg-gray-100 w-[20vh] items-center justify-center"
           onClick={handleGenerateEmail}
         >
-          Mail Master AI 🎩
+          MailSwift AI 🎩
         </DrawerTrigger>
         <DrawerContent className="bg-blue-300 text-black">
           <DrawerHeader>

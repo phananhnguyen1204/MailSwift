@@ -33,7 +33,7 @@ const LandingPage: React.FC = () => {
               Unlock the Power of <br />
             </h1>
             <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-4xl xl:text-6xl ">
-              Mail Master ✉️
+              MailSwift ✉️
             </h1>
             <p className="max-w-3xl mx-auto text-gray-400 text-base sm:text-lg p-3 mt-3">
               Our AI-powered email platform helps you automate tasks, gain

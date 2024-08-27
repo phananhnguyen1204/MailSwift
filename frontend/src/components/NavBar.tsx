@@ -14,7 +14,7 @@ const NavBar: React.FC = () => {
       <div className="flex items-center">
         <Link to="/" className="flex items-center text-white no-underline">
           <Logo className="h-8 w-8" />
-          <p className="ml-2 text-lg font-semibold text-white">Mail Master</p>
+          <p className="ml-2 text-lg font-semibold text-white">MailSwift</p>
         </Link>
       </div>
       <div className="flex items-center mr-8">
