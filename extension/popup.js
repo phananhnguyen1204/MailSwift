@@ -1,23 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Popup script loaded");
-
   const generateButton = document.getElementById("generateButton");
-  // const summarizeButton = document.getElementById("summarizeButton");
+  const summarizeButton = document.getElementById("summarizeButton");
+  const draftButton = document.getElementById("draftButton");
   const responseArea = document.getElementById("responseArea");
-  if (responseArea) {
-    console.error("Response area element found!");
-  }
+
   generateButton.addEventListener("click", function () {
     // Send a message to the background script to trigger email response generation
-    console.log("Generate button clicked");
     chrome.runtime.sendMessage({ action: "generateEmailResponse" });
   });
 
-  // summarizeButton.addEventListener("click", function () {
-  //   // Send a message to the background script to trigger email response generation
-  //   console.log("Summarize button clicked");
-  //   chrome.runtime.sendMessage({ action: "summarizeEmail" });
-  // });
+  draftButton.addEventListener("click", function () {
+    console.log("draft email clicked");
+    chrome.runtime.sendMessage({ action: "openDraftURL" });
+  });
+
+  summarizeButton.addEventListener("click", function () {
+    // Send a message to the background script to trigger email response generation
+    console.log("Summarize button clicked");
+    chrome.runtime.sendMessage({ action: "summarizeEmailContent" });
+  });
 
   // Listen for messages from the background script
   chrome.runtime.onMessage.addListener(function (

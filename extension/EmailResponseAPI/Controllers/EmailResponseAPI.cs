@@ -25,18 +25,28 @@ namespace API.Controllers
         [HttpPost("generate-email")]
         public async Task<IActionResult> GenerateEmail([FromBody] EmailRequest request)
         {
+            return await HandleEmailRequest(request, "Based on the following information, generate an appropriate email response:");
+        }
+
+        [HttpPost("summarize-email")]
+        public async Task<IActionResult> SummarizeEmail([FromBody] EmailRequest request)
+        {
+            return await HandleEmailRequest(request, "Based on the following information, summarize the email content:");
+        }
+
+        private async Task<IActionResult> HandleEmailRequest(EmailRequest request, string instruction)
+        {
             try
             {
-                // Construct a custom prompt with the full email data
-                string customPrompt = $"You are a helpful email assistant. Based on the following information, generate an appropriate email response:\n" +
-                                    $"\nSubject: {request.Subject}" +
-                                    $"\nSender: {request.Sender}" +
-                                    $"\nReceived at: {request.Timestamp}" +
-                                    $"\n\nEmail Body:\n{request.Body}";
+                string customPrompt = $"{instruction}\n" +
+                                      $"\nSubject: {request.Subject}" +
+                                      $"\nSender: {request.Sender}" +
+                                      $"\nReceived at: {request.Timestamp}" +
+                                      $"\n\nEmail Body:\n{request.Body}";
 
                 var chatOptions = new ChatCompletionsOptions
                 {
-                    Messages =
+                    Messages = 
                     {
                         new ChatMessage(ChatRole.System, "You are a helpful email assistant."),
                         new ChatMessage(ChatRole.User, customPrompt)
@@ -54,6 +64,13 @@ namespace API.Controllers
             catch (RequestFailedException ex)
             {
                 return StatusCode(ex.Status, $"Error generating email: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Log the detailed exception for troubleshooting
+                Console.Error.WriteLine($"Unhandled Error: {ex.Message}");
+                Console.Error.WriteLine($"Stack Trace: {ex.StackTrace}");
+                return StatusCode(500, $"Unhandled error: {ex.Message}");
             }
         }
     }
